@@ -13,13 +13,13 @@ pub struct TraceCalls {
     action_from: Vec<Option<Vec<u8>>>,
     action_to: Vec<Option<Vec<u8>>>,
     action_value: Vec<String>,
-    action_gas: Vec<Option<u32>>,
+    action_gas: Vec<Option<u64>>,
     action_input: Vec<Option<Vec<u8>>>,
     action_call_type: Vec<Option<String>>,
     action_init: Vec<Option<Vec<u8>>>,
     action_reward_type: Vec<Option<String>>,
     action_type: Vec<String>,
-    result_gas_used: Vec<Option<u32>>,
+    result_gas_used: Vec<Option<u64>>,
     result_output: Vec<Option<Vec<u8>>>,
     result_code: Vec<Option<Vec<u8>>>,
     result_address: Vec<Option<Vec<u8>>>,
@@ -107,7 +107,7 @@ fn process_action(action: &Action, columns: &mut TraceCalls, schema: &Table) {
             store!(schema, columns, action_from, Some(action.from.as_bytes().to_vec()));
             store!(schema, columns, action_to, Some(action.to.as_bytes().to_vec()));
             store!(schema, columns, action_value, action.value.to_string());
-            store!(schema, columns, action_gas, Some(action.gas.as_u32()));
+            store!(schema, columns, action_gas, Some(action.gas.as_u64()));
             store!(schema, columns, action_input, Some(action.input.to_vec()));
             store!(
                 schema,
@@ -122,7 +122,7 @@ fn process_action(action: &Action, columns: &mut TraceCalls, schema: &Table) {
             store!(schema, columns, action_from, Some(action.from.as_bytes().to_vec()));
             store!(schema, columns, action_to, None);
             store!(schema, columns, action_value, action.value.to_string());
-            store!(schema, columns, action_gas, Some(action.gas.as_u32()));
+            store!(schema, columns, action_gas, Some(action.gas.as_u64()));
             store!(schema, columns, action_input, None);
             store!(schema, columns, action_call_type, None);
             store!(schema, columns, action_init, Some(action.init.to_vec()));
@@ -159,13 +159,13 @@ fn process_action(action: &Action, columns: &mut TraceCalls, schema: &Table) {
 fn process_result(result: &Option<Res>, columns: &mut TraceCalls, schema: &Table) {
     match result {
         Some(Res::Call(result)) => {
-            store!(schema, columns, result_gas_used, Some(result.gas_used.as_u32()));
+            store!(schema, columns, result_gas_used, Some(result.gas_used.as_u64()));
             store!(schema, columns, result_output, Some(result.output.to_vec()));
             store!(schema, columns, result_code, None);
             store!(schema, columns, result_address, None);
         }
         Some(Res::Create(result)) => {
-            store!(schema, columns, result_gas_used, Some(result.gas_used.as_u32()));
+            store!(schema, columns, result_gas_used, Some(result.gas_used.as_u64()));
             store!(schema, columns, result_output, None);
             store!(schema, columns, result_code, Some(result.code.to_vec()));
             store!(schema, columns, result_address, Some(result.address.as_bytes().to_vec()));
