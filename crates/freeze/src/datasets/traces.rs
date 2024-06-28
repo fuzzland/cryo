@@ -153,11 +153,11 @@ fn process_action(action: &Action, columns: &mut Traces, schema: &Table) {
         }
         Action::Create(action) => {
             store!(schema, columns, action_from, Some(action.from.as_bytes().to_vec()));
-            store!(schema, columns, action_to, None);
+            store!(schema, columns, action_to, Some(vec![]));
             store!(schema, columns, action_value, action.value.to_string());
             store!(schema, columns, action_gas, Some(action.gas.as_u64()));
-            store!(schema, columns, action_input, None);
-            store!(schema, columns, action_call_type, None);
+            store!(schema, columns, action_input, Some(vec![]));
+            store!(schema, columns, action_call_type, Some("".to_string()));
             store!(schema, columns, action_init, Some(action.init.to_vec()));
             store!(schema, columns, action_reward_type, None);
         }
@@ -166,18 +166,18 @@ fn process_action(action: &Action, columns: &mut Traces, schema: &Table) {
             store!(schema, columns, action_to, Some(action.refund_address.as_bytes().to_vec()));
             store!(schema, columns, action_value, action.balance.to_string());
             store!(schema, columns, action_gas, None);
-            store!(schema, columns, action_input, None);
-            store!(schema, columns, action_call_type, None);
+            store!(schema, columns, action_input, Some(vec![]));
+            store!(schema, columns, action_call_type, Some("".to_string()));
             store!(schema, columns, action_init, None);
             store!(schema, columns, action_reward_type, None);
         }
         Action::Reward(action) => {
             store!(schema, columns, action_from, Some(action.author.as_bytes().to_vec()));
-            store!(schema, columns, action_to, None);
+            store!(schema, columns, action_to, Some(vec![]));
             store!(schema, columns, action_value, action.value.to_string());
             store!(schema, columns, action_gas, None);
-            store!(schema, columns, action_input, None);
-            store!(schema, columns, action_call_type, None);
+            store!(schema, columns, action_input, Some(vec![]));
+            store!(schema, columns, action_call_type, Some("".to_string()));
             store!(schema, columns, action_init, None);
             store!(
                 schema,

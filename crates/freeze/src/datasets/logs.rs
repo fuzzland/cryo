@@ -138,7 +138,7 @@ fn process_logs(logs: Vec<Log>, columns: &mut Logs, schema: &Table) -> R<()> {
                 let topic = if i < log.topics.len() {
                     Some(log.topics[i].as_bytes().to_vec())
                 } else {
-                    None
+                    Some(vec![])
                 };
                 match i {
                     0 => store!(schema, columns, topic0, topic),
